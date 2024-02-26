@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from video.views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/file/', VideoFileCreateAPIView.as_view(), name='video-file-list-create'),
+    path('api/file/<uuid:pk>/', VideoFileGetUpdateDeleteAPIView.as_view(), name='video-file-detail'),
 ]
