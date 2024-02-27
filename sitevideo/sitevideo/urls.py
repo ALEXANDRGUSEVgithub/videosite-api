@@ -22,5 +22,5 @@ from video.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/file/', VideoFileCreateAPIView.as_view(), name='video-file-list-create'),
-    path('api/file/<uuid:pk>/', VideoFileGetUpdateDeleteAPIView.as_view(), name='video-file-detail'),
+    path('api/file/<uuid:pk>/', VideoFileListAPIView.as_view(), name='video-file-detail'),
 ]

@@ -10,5 +10,5 @@ class VideoFile(models.Model):
     processing = models.BooleanField(default=False, verbose_name='Идет ли процесс обработки')
     processingSuccess = models.BooleanField(default=None, null=True,
                                             verbose_name="Успешность последней операции над видео")
-    filepath = models.FileField(upload_to='video_file/%Y/%m/%d/')
+    filepath = models.FileField(upload_to='video_file/')
 
