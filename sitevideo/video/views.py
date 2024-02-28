@@ -9,6 +9,8 @@ from .models import VideoFile
 from .serializers import VideoFileSerializer, VideoFileCreateSerializer
 import os
 
+from .tasks import resize_video
+
 
 class VideoFileListAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = VideoFile.objects.all()
@@ -58,30 +60,8 @@ class VideoFileListAPIView(generics.RetrieveUpdateDestroyAPIView):
         # Создаем выходной путь файла
         output_file_path = f'{os.path.splitext(input_file_path)[0]}_resized.mp4'
 
-        try:
-            ffmpeg.input(input_file_path).output(output_file_path, s=f'{width}x{height}').run(overwrite_output=True)
-
-            instance.processingSuccess = True
-        except Exception as e:
-            instance.processing = False
-            instance.processingSuccess = False
-            return JsonResponse({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        finally:
-            instance.processing = False
-
-            # Приводим путь обработанного файла к относительному виду
-            final_file_path = os.path.relpath(output_file_path, MEDIA_ROOT)
-
-            # Нормализуем путь
-            final_file_path = final_file_path.replace("\\", "/")
-
-            # Сохраняем в базе данных новый путь
-            instance.filepath = final_file_path
-
-            # Удаляем старый необработанный файл
-            os.remove(input_file_path)
-
-            instance.save()
+        # Запускаем таску для обработки видео
+        resize_video.delay(instance.id, input_file_path, output_file_path, width, height)
 
         return JsonResponse({'success': True})
 
