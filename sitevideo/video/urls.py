@@ -7,4 +7,3 @@ urlpatterns = [
     path('file/', VideoFileCreateAPIView.as_view(), name='video-create'),
     path('file/<uuid:pk>/', VideoFileListAPIView.as_view(), name='video-file-detail')
 ]
-

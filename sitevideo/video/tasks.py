@@ -1,9 +1,9 @@
+import os
+import logging
 import ffmpeg
 
 from sitevideo.celery import celery
-import os
 
-import logging
 
 logger = logging.getLogger('main')
 
@@ -12,6 +12,7 @@ logger = logging.getLogger('main')
 def resize_video(instance_id, input_file_path, output_file_path, width, height):
     from sitevideo.settings import MEDIA_ROOT
     from .models import VideoFile
+
     # Создаем модель текущего объекта из БД
     instance = VideoFile.objects.get(id=instance_id)
 
@@ -19,6 +20,7 @@ def resize_video(instance_id, input_file_path, output_file_path, width, height):
         ffmpeg.input(input_file_path).output(output_file_path, s=f'{width}x{height}').run(overwrite_output=True)
 
         instance.processingSuccess = True
+
         logger.info(f"Video processing has started. ID: {instance_id}")
         return True
 
@@ -39,6 +41,7 @@ def resize_video(instance_id, input_file_path, output_file_path, width, height):
 
         instance.filepath = final_file_path
 
+        # Удаляем старый видео файл
         os.remove(input_file_path)
 
         instance.save()

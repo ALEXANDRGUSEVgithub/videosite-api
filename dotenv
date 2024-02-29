@@ -1,0 +1,16 @@
+SECRET_KEY=""
+
+REDIS_HOST="127.0.0.1"
+REDIS_PORT=6379
+
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASS=postgres
+DB_NAME=postgres
+
+TEST_DB_HOST=localhost
+TEST_DB_PORT=5432
+TEST_DB_USER=postgres
+TEST_DB_PASS=456654
+TEST_DB_NAME=test_postgres

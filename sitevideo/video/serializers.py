@@ -1,7 +1,6 @@
 from pathlib import Path
 
-from django.http import JsonResponse
-from rest_framework import serializers, status
+from rest_framework import serializers
 
 from video.models import VideoFile
 
@@ -14,8 +13,10 @@ class VideoFileCreateSerializer(serializers.ModelSerializer):
     def validate(self, data):
         filename = data.get('filepath')
         filesuffix = Path(str(filename)).suffix
+
         if not filesuffix == '.mp4':
             raise serializers.ValidationError({'error': 'Invalid file format'})
+
         return data
 
 

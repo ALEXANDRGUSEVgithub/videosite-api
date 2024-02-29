@@ -1,10 +1,8 @@
-
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
-
 
 from video.models import VideoFile
 
@@ -19,6 +17,7 @@ class VideoFileCreateAPIViewTest(APITestCase):
 
         invalid_data = {'filename': 'video2', 'filepath': self.uploaded_file}
         response = self.client.post(self.create_url, invalid_data, format='multipart')
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_video_file_with_invalid_data(self):
@@ -26,6 +25,7 @@ class VideoFileCreateAPIViewTest(APITestCase):
 
         invalid_data = {'filename': 'video2', 'filepath': uploaded_file}
         response = self.client.post(self.create_url, invalid_data, format='multipart')
+
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
@@ -43,14 +43,17 @@ class VideoFileListAPIViewTest(APITestCase):
 
     def test_get_video_file(self):
         response = self.client.get(self.list_url)
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_video_file_invalid_id(self):
         non_existing_list_url = reverse('api:video-file-detail',
                                         kwargs={'pk': 'daba8b08-a613-493d-b09f-5e7c390b3029'})
         response = self.client.get(non_existing_list_url)
+
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_delete_video_file(self):
         response = self.client.delete(self.list_url)
+
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

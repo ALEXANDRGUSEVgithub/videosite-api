@@ -11,6 +11,7 @@ from .tasks import resize_video
 
 import logging
 
+
 logger = logging.getLogger('main')
 
 
@@ -68,7 +69,8 @@ class VideoFileListAPIView(generics.RetrieveUpdateDestroyAPIView):
             height = request.data.get('height')
 
             # Проверка на корректность полученных данных width и height
-            if not (width and height and isinstance(width, int) and isinstance(height, int) and width > 20 and height > 20):
+            if not (width and height and isinstance(width, int) and isinstance(height, int) and
+                    width > 20 and height > 20):
                 raise ValidationError()
 
             # Устанавливаем статусы процесса обработки
@@ -112,7 +114,7 @@ class VideoFileCreateAPIView(generics.CreateAPIView):
             serializer.save()
 
             response_data = {'id': serializer.instance.id}
-            headers = self.get_success_headers(serializer.data)
+            # headers = self.get_success_headers(serializer.data)
             logger.info(f"A new record has been created in the database with id: {serializer.instance.id}")
             return Response(response_data, status=status.HTTP_200_OK)
 
