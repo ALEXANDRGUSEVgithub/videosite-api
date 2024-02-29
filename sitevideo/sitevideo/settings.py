@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-w=0q06fg3^^b3*dfeyie0er#k4igq=ecktihqe@(#veil#5-3*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
+
 
 
 # Application definition
@@ -134,3 +135,35 @@ REDIS_HOST = REDIS_HOST
 REDIS_PORT = REDIS_PORT
 CELERY_BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}"
 CELERY_RESULT_BACKEND = f"redis://{REDIS_HOST}:{REDIS_PORT}"
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'formatters': {
+        "main_format": {
+            "format": "{asctime} - {levelname} - {module} - {filename} : {message}",
+            "style": "{"
+        }
+    },
+
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'main_format',
+        },
+        'file': {
+            'class': "logging.FileHandler",
+            'formatter': 'main_format',
+            'filename': 'info.log'
+        }
+    },
+
+    'loggers': {
+        'main': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
