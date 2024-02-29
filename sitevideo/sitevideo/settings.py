@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
-from config import REDIS_HOST, REDIS_PORT
+from config import REDIS_HOST, REDIS_PORT, DB_NAME, DB_USER, DB_PASS, DB_HOST, DB_PORT, TEST_DB_NAME, TEST_DB_USER, \
+    TEST_DB_PASS, TEST_DB_HOST, TEST_DB_PORT
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -81,8 +82,20 @@ WSGI_APPLICATION = 'sitevideo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASS,
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': TEST_DB_NAME,
+        'USER': TEST_DB_USER,
+        'PASSWORD': TEST_DB_PASS,
+        'HOST': TEST_DB_HOST,
+        'PORT': TEST_DB_PORT,
     }
 }
 
