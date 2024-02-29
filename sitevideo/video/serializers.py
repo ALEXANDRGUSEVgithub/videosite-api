@@ -15,7 +15,7 @@ class VideoFileCreateSerializer(serializers.ModelSerializer):
         filename = data.get('filepath')
         filesuffix = Path(str(filename)).suffix
         if not filesuffix == '.mp4':
-            raise serializers.ValidationError({'error': 'Неверный формат файла'})
+            raise serializers.ValidationError({'error': 'Invalid file format'})
         return data
 
 
