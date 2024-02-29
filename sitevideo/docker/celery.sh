@@ -1,4 +1,4 @@
 #!/bin/bash
 
 
-celery --app=app.tasks.celery:celery worker -l INFO
+celery --app=sitevideo.sitevideo.celery:celery worker -l INFO

@@ -33,7 +33,7 @@ services:
       context: .
     container_name: booking_celery
 
-    command: [ "/sitevideo/docker/celery.sh"]
+    command: [ "sitevideo/docker/celery.sh"]
 
     env_file:
       - .env-non-dev
